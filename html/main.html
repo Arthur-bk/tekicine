@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacinas por Idade</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
+<!-- Header fixo no topo com botão de menu -->
+<header class="header d-flex justify-content-between align-items-center">
+    <h1 class="header-title">TEKICINA</h1>
+    <!-- Botão para abrir e fechar o menu -->
+    <div id="menuBtn" onclick="toggleMenu()">
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+    </div>
+</header>
+
+<!-- Menu deslizante -->
+<div id="slideMenu">
+    <a href="/cadastro">Cadastro de Usuário</a>
+    <a href="/vacinas">Vacinas Necessárias</a>
+    <a href="/historico">Histórico de Vacinas</a>
+    <a href="/configuracoes">Configurações</a>
+</div>
+
+<div class="container py-5" style="margin-top: 80px;">
+    <h1 class="text-center mb-5">Vacinas Necessárias por Idade</h1>
+
+    <!-- Formulário de busca por CPF -->
+    <form id="cpfForm" class="mb-4">
+        <div class="input-group">
+            <input type="text" id="cpfInput" class="form-control" placeholder="Digite o CPF do usuário" required>
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+
+    <!-- Botões para filtrar vacinas -->
+    <div class="d-flex justify-content-center mb-4">
+        <button id="showPendentes" class="btn btn-warning me-2" onclick="showPendentes()">Mostrar Pendentes</button>
+        <button id="showFeitas" class="btn btn-success" onclick="showFeitas()">Mostrar Feitas</button>
+    </div>
+
+    <!-- Contêiner para exibir vacinas -->
+    <div id="results">
+        <div id="vacinasPendentes" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
+        <div id="vacinasFeitas" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 d-none"></div>
+    </div>
+</div>
+
+<script>
+    // Função para alternar o menu deslizante e o botão de controle
+    function toggleMenu() {
+        const menu = document.getElementById("slideMenu");
+        const menuBtn = document.getElementById("menuBtn");
+
+        if (menu.style.right === "0px") {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    }
+
+    // Abre o menu
+    function openMenu() {
+        const menu = document.getElementById("slideMenu");
+        const menuBtn = document.getElementById("menuBtn");
+
+        menu.style.right = "0px";
+        menuBtn.classList.add("change");
+        document.addEventListener("click", closeMenuOnClickOutside);
+    }
+
+    // Fecha o menu
+    function closeMenu() {
+        const menu = document.getElementById("slideMenu");
+        const menuBtn = document.getElementById("menuBtn");
+
+        menu.style.right = "-250px";
+        menuBtn.classList.remove("change");
+        document.removeEventListener("click", closeMenuOnClickOutside);
+    }
+
+    // Fecha o menu se o clique for fora dele
+    function closeMenuOnClickOutside(event) {
+        const menu = document.getElementById("slideMenu");
+        const menuBtn = document.getElementById("menuBtn");
+
+        if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
+            closeMenu();
+        }
+    }
+
+    // Função para buscar vacinas por CPF
+    document.getElementById('cpfForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const cpf = document.getElementById('cpfInput').value;
+
+        fetch(`/api/vacinas?cpf=${cpf}`)
+            .then(response => response.json())
+            .then(data => {
+                renderVaccines(data);
+            });
+    });
+
+    // Função para renderizar vacinas pendentes e feitas
+    function renderVaccines(data) {
+        const pendentesContainer = document.getElementById('vacinasPendentes');
+        const feitasContainer = document.getElementById('vacinasFeitas');
+        pendentesContainer.innerHTML = '';
+        feitasContainer.innerHTML = '';
+
+        data.forEach(vacina => {
+            const card = document.createElement('div');
+            card.classList.add('col');
+
+            card.innerHTML = `
+                <div class="card ${vacina.status === 'Pendente' ? 'pending' : 'completed'} h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">${vacina.nome}</h5>
+                        <p class="card-text">Data recomendada: ${vacina.dataRecomendada}</p>
+                        <p class="card-text">Motivo: ${vacina.motivo}</p>
+                        <p class="card-text">Doses: ${vacina.doses}</p>
+                        <p class="card-text">Status: ${vacina.status}</p>
+                        ${vacina.permissao && vacina.status === 'Pendente' ? 
+                            `<button onclick="alterarStatus('${vacina.id}')" class="btn btn-primary">Marcar como Feita</button>` 
+                            : ""}
+                    </div>
+                </div>
+            `;
+            
+            if (vacina.status === 'Pendente') {
+                pendentesContainer.appendChild(card);
+            } else {
+                feitasContainer.appendChild(card);
+            }
+        });
+    }
+
+    // Função para alterar o status da vacina
+    function alterarStatus(vacinaId) {
+        fetch(`/api/alterarStatus/${vacinaId}`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            document.getElementById('cpfForm').dispatchEvent(new Event('submit')); // Atualiza a lista
+        });
+    }
+
+    // Funções para filtrar vacinas pendentes e feitas
+    function showPendentes() {
+        document.getElementById('vacinasPendentes').classList.remove('d-none');
+        document.getElementById('vacinasFeitas').classList.add('d-none');
+    }
+
+    function showFeitas() {
+        document.getElementById('vacinasPendentes').classList.add('d-none');
+        document.getElementById('vacinasFeitas').classList.remove('d-none');
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

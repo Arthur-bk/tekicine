@@ -1,0 +1,124 @@
+/* Estilo personalizado para a página de cadastro */
+body {
+    background-color: #f4f6f9;
+}
+
+/* Estilo do header fixo */
+.header {
+    width: 100%;
+    background-color: #003366;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1002;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Estilo do menu deslizante no canto direito */
+#slideMenu {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    height: 100%;
+    background-color: #003366;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    color: white;
+    z-index: 1000;
+}
+
+#slideMenu a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+#slideMenu a:hover {
+    background-color: #575757;
+}
+
+/* Botão de abrir e fechar o menu */
+#menuBtn {
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+    transition: color 0.3s;
+}
+
+/* Animação de hambúrguer para X */
+.menu-icon {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .menu-icon:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+    background-color: white;
+}
+
+.change .menu-icon:nth-child(2) {
+    opacity: 0;
+}
+
+.change .menu-icon:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+    background-color: white;
+}
+
+.container {
+    max-width: 600px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+    background-color: #003366;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #002244;
+}
+
+.bg-light {
+    background-color: #fff !important;
+}
+
+.shadow {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
