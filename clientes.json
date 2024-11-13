@@ -1,0 +1,39 @@
+{
+    "clientes": [
+        {
+            "nome": "João Silva",
+            "cpf": "123.456.789-00",
+            "dataNascimento": "1990-01-15",
+            "email": "joao.silva@example.com",
+            "telefone": "(11) 98765-4321"
+        },
+        {
+            "nome": "Maria Oliveira",
+            "cpf": "987.654.321-00",
+            "dataNascimento": "1985-06-10",
+            "email": "maria.oliveira@example.com",
+            "telefone": "(21) 99876-5432"
+        },
+        {
+            "nome": "Carlos Pereira",
+            "cpf": "321.654.987-00",
+            "dataNascimento": "1978-11-23",
+            "email": "carlos.pereira@example.com",
+            "telefone": "(31) 91234-5678"
+        },
+        {
+            "nome": "Ana Souza",
+            "cpf": "456.123.789-00",
+            "dataNascimento": "1995-09-07",
+            "email": "ana.souza@example.com",
+            "telefone": "(41) 99812-3456"
+        },
+        {
+            "nome": "Fernanda Lima",
+            "cpf": "654.321.987-00",
+            "dataNascimento": "2000-05-18",
+            "email": "fernanda.lima@example.com",
+            "telefone": "(51) 98712-3456"
+        }
+    ]
+}

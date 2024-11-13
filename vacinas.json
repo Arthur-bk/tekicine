@@ -1,0 +1,162 @@
+[
+  {
+    "vacina_nome": "BCG",
+    "idade": "Ao nascer",
+    "doencas_evitas": "Formas graves da tuberculose (miliar e meníngea)",
+    "dose": "Única",
+    "intervalo": "Nenhum",
+    "estoque": "50",
+    "data_de_vencimento": "2025-01-01",
+    "detalhes": "A vacina BCG é aplicada em recém-nascidos para proteger contra formas graves de tuberculose, especialmente meningite tuberculosa e tuberculose miliar."
+  },
+  {
+    "vacina_nome": "Hepatite B (recombinante)",
+    "idade": "Ao nascer",
+    "doencas_evitas": "Hepatite B",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "45",
+    "data_de_vencimento": "2025-02-15",
+    "detalhes": "Protege contra o vírus da hepatite B, que pode causar doenças crônicas do fígado e até câncer hepático."
+  },
+  {
+    "vacina_nome": "Penta (Difteria, Tétano, Pertussis, Hepatite B, Haemophilus influenzae B)",
+    "idade": "2 meses",
+    "doencas_evitas": "Difteria, Tétano, Coqueluche, Hepatite B, infecções causadas pelo Haemophilus influenzae B",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "30",
+    "data_de_vencimento": "2025-03-01",
+    "detalhes": "Oferece proteção contra cinco doenças perigosas, incluindo difteria, tétano, coqueluche, hepatite B e infecções causadas por Haemophilus influenzae tipo B."
+  },
+  {
+    "vacina_nome": "Covid-19",
+    "idade": "6 meses",
+    "doencas_evitas": "Proteção contra formas graves e complicações da covid-19",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "100",
+    "data_de_vencimento": "2025-08-10",
+    "detalhes": "Induz imunidade contra o vírus SARS-CoV-2, protegendo especialmente contra formas graves e complicações da doença."
+  },
+  {
+    "vacina_nome": "Febre amarela (atenuada) - (FA)",
+    "idade": "9 meses",
+    "doencas_evitas": "Febre amarela",
+    "dose": "Única",
+    "intervalo": "Nenhum",
+    "estoque": "60",
+    "data_de_vencimento": "2025-12-01",
+    "detalhes": "Protege contra o vírus da febre amarela, uma doença infecciosa que pode causar febre hemorrágica e insuficiência hepática."
+  },
+  {
+    "vacina_nome": "Tríplice viral (Sarampo, Caxumba, Rubéola)",
+    "idade": "12 meses",
+    "doencas_evitas": "Sarampo, Caxumba, Rubéola",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "80",
+    "data_de_vencimento": "2025-07-15",
+    "detalhes": "Oferece imunidade contra sarampo, caxumba e rubéola, prevenindo complicações sérias como pneumonia, encefalite e surdez."
+  },
+  {
+    "vacina_nome": "HPV Quadrivalente",
+    "idade": "Clínica Particular",
+    "doencas_evitas": "Infecções pelos tipos 6, 11, 16 e 18 do vírus HPV, prevenindo cânceres e verrugas genitais",
+    "dose": "Primeira",
+    "intervalo": "6 meses entre doses",
+    "estoque": "40",
+    "data_de_vencimento": "2025-09-30",
+    "detalhes": "Indicada para proteção contra o HPV, ajudando a prevenir câncer do colo do útero e verrugas genitais em adolescentes e adultos."
+  },
+  {
+    "vacina_nome": "Meningocócica B",
+    "idade": "Clínica Particular",
+    "doencas_evitas": "Meningite B",
+    "dose": "Primeira",
+    "intervalo": "2 meses entre doses",
+    "estoque": "25",
+    "data_de_vencimento": "2026-03-20",
+    "detalhes": "Previne a meningite B, uma forma grave de infecção que pode causar complicações sérias, incluindo morte e danos neurológicos."
+  },
+  {
+    "vacina_nome": "Herpes Zoster (Shingrix)",
+    "idade": "Clínica Particular",
+    "doencas_evitas": "Herpes zoster (cobreiro)",
+    "dose": "Primeira",
+    "intervalo": "2 a 6 meses entre doses",
+    "estoque": "15",
+    "data_de_vencimento": "2026-01-01",
+    "detalhes": "Oferece proteção contra herpes zoster, prevenindo surtos de cobreiro e suas dolorosas complicações, como a neuralgia pós-herpética."
+  },
+  {
+    "vacina_nome": "Influenza Quadrivalente",
+    "idade": "Clínica Particular",
+    "doencas_evitas": "Quatro cepas do vírus influenza",
+    "dose": "Anual",
+    "intervalo": "Nenhum",
+    "estoque": "70",
+    "data_de_vencimento": "2024-12-15",
+    "detalhes": "Oferece proteção contra as quatro cepas mais comuns do vírus influenza, reduzindo o risco de gripe e suas complicações."
+  },
+  {
+    "vacina_nome": "Varicela (monovalente)",
+    "idade": "Clínica Particular",
+    "doencas_evitas": "Varicela (catapora)",
+    "dose": "Primeira",
+    "intervalo": "6 semanas entre doses",
+    "estoque": "35",
+    "data_de_vencimento": "2025-11-20",
+    "detalhes": "Previne a varicela, uma infecção viral que causa febre e erupções cutâneas, comum em crianças e que pode ter complicações em adultos."
+  },
+  {
+    "vacina_nome": "Hepatite A",
+    "idade": "15 meses",
+    "doencas_evitas": "Hepatite A",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "40",
+    "data_de_vencimento": "2025-06-01",
+    "detalhes": "A vacina contra a hepatite A previne infecções causadas pelo vírus da hepatite A, que pode levar a doenças hepáticas."
+  },
+  {
+    "vacina_nome": "Meningocócica ACWY",
+    "idade": "Adolescência",
+    "doencas_evitas": "Meningite e outras infecções causadas pelos sorogrupos A, C, W e Y da bactéria Neisseria meningitidis",
+    "dose": "Única",
+    "intervalo": "Nenhum",
+    "estoque": "20",
+    "data_de_vencimento": "2025-09-15",
+    "detalhes": "Protege contra quatro sorogrupos da meningite meningocócica, uma infecção grave que afeta o cérebro e a medula espinhal."
+  },
+  {
+    "vacina_nome": "Tetraviral (Sarampo, Caxumba, Rubéola e Varicela)",
+    "idade": "15 meses",
+    "doencas_evitas": "Sarampo, caxumba, rubéola e varicela",
+    "dose": "Única",
+    "intervalo": "Nenhum",
+    "estoque": "50",
+    "data_de_vencimento": "2025-10-20",
+    "detalhes": "Combina proteção contra sarampo, caxumba, rubéola e varicela, doenças virais que podem causar complicações graves."
+  },
+  {
+    "vacina_nome": "DTPa (Difteria, Tétano e Coqueluche acelular)",
+    "idade": "4 anos",
+    "doencas_evitas": "Difteria, tétano e coqueluche",
+    "dose": "Reforço",
+    "intervalo": "3 anos entre doses",
+    "estoque": "60",
+    "data_de_vencimento": "2025-11-30",
+    "detalhes": "Protege contra difteria, tétano e coqueluche, sendo recomendada como dose de reforço para prolongar a imunidade."
+  },
+  {
+    "vacina_nome": "Hib (Haemophilus influenzae tipo b)",
+    "idade": "2 meses",
+    "doencas_evitas": "Infecções graves como meningite e pneumonia causadas pelo Haemophilus influenzae tipo b",
+    "dose": "Primeira",
+    "intervalo": "2 meses entre doses",
+    "estoque": "35",
+    "data_de_vencimento": "2026-01-15",
+    "detalhes": "Previne infecções graves, especialmente em crianças, como meningite, pneumonia e epiglotite causadas pelo Haemophilus influenzae tipo b."
+  }
+]

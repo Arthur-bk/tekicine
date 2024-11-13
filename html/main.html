@@ -1,170 +1,303 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vacinas por Idade</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
     <link rel="stylesheet" href="../css/main.css">
 </head>
+
 <body>
 
-<!-- Header fixo no topo com botão de menu -->
-<header class="header d-flex justify-content-between align-items-center">
-    <h1 class="header-title">TEKICINA</h1>
-    <!-- Botão para abrir e fechar o menu -->
-    <div id="menuBtn" onclick="toggleMenu()">
-        <div class="menu-icon"></div>
-        <div class="menu-icon"></div>
-        <div class="menu-icon"></div>
-    </div>
-</header>
-
-<!-- Menu deslizante -->
-<div id="slideMenu">
-    <a href="/cadastro">Cadastro de Usuário</a>
-    <a href="/vacinas">Vacinas Necessárias</a>
-    <a href="/historico">Histórico de Vacinas</a>
-    <a href="/configuracoes">Configurações</a>
-</div>
-
-<div class="container py-5" style="margin-top: 80px;">
-    <h1 class="text-center mb-5">Vacinas Necessárias por Idade</h1>
-
-    <!-- Formulário de busca por CPF -->
-    <form id="cpfForm" class="mb-4">
-        <div class="input-group">
-            <input type="text" id="cpfInput" class="form-control" placeholder="Digite o CPF do usuário" required>
-            <button class="btn btn-primary" type="submit">Buscar</button>
+    <!-- Modal de Entrada de CPF -->
+    <div class="modal fade" id="cpfModal" tabindex="-1" aria-labelledby="cpfModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cpfModalLabel">Digite seu CPF</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="cpfForm">
+                        <div class="mb-3">
+                            <label for="cpfInput" class="form-label">CPF</label>
+                            <input type="text" class="form-control" id="cpfInput" placeholder="Digite seu CPF" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </form>
-
-    <!-- Botões para filtrar vacinas -->
-    <div class="d-flex justify-content-center mb-4">
-        <button id="showPendentes" class="btn btn-warning me-2" onclick="showPendentes()">Mostrar Pendentes</button>
-        <button id="showFeitas" class="btn btn-success" onclick="showFeitas()">Mostrar Feitas</button>
     </div>
 
-    <!-- Contêiner para exibir vacinas -->
-    <div id="results">
-        <div id="vacinasPendentes" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
-        <div id="vacinasFeitas" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 d-none"></div>
-    </div>
-</div>
-
-<script>
-    // Função para alternar o menu deslizante e o botão de controle
-    function toggleMenu() {
-        const menu = document.getElementById("slideMenu");
-        const menuBtn = document.getElementById("menuBtn");
-
-        if (menu.style.right === "0px") {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    }
-
-    // Abre o menu
-    function openMenu() {
-        const menu = document.getElementById("slideMenu");
-        const menuBtn = document.getElementById("menuBtn");
-
-        menu.style.right = "0px";
-        menuBtn.classList.add("change");
-        document.addEventListener("click", closeMenuOnClickOutside);
-    }
-
-    // Fecha o menu
-    function closeMenu() {
-        const menu = document.getElementById("slideMenu");
-        const menuBtn = document.getElementById("menuBtn");
-
-        menu.style.right = "-250px";
-        menuBtn.classList.remove("change");
-        document.removeEventListener("click", closeMenuOnClickOutside);
-    }
-
-    // Fecha o menu se o clique for fora dele
-    function closeMenuOnClickOutside(event) {
-        const menu = document.getElementById("slideMenu");
-        const menuBtn = document.getElementById("menuBtn");
-
-        if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
-            closeMenu();
-        }
-    }
-
-    // Função para buscar vacinas por CPF
-    document.getElementById('cpfForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const cpf = document.getElementById('cpfInput').value;
-
-        fetch(`/api/vacinas?cpf=${cpf}`)
-            .then(response => response.json())
-            .then(data => {
-                renderVaccines(data);
-            });
-    });
-
-    // Função para renderizar vacinas pendentes e feitas
-    function renderVaccines(data) {
-        const pendentesContainer = document.getElementById('vacinasPendentes');
-        const feitasContainer = document.getElementById('vacinasFeitas');
-        pendentesContainer.innerHTML = '';
-        feitasContainer.innerHTML = '';
-
-        data.forEach(vacina => {
-            const card = document.createElement('div');
-            card.classList.add('col');
-
-            card.innerHTML = `
-                <div class="card ${vacina.status === 'Pendente' ? 'pending' : 'completed'} h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">${vacina.nome}</h5>
-                        <p class="card-text">Data recomendada: ${vacina.dataRecomendada}</p>
-                        <p class="card-text">Motivo: ${vacina.motivo}</p>
-                        <p class="card-text">Doses: ${vacina.doses}</p>
-                        <p class="card-text">Status: ${vacina.status}</p>
-                        ${vacina.permissao && vacina.status === 'Pendente' ? 
-                            `<button onclick="alterarStatus('${vacina.id}')" class="btn btn-primary">Marcar como Feita</button>` 
-                            : ""}
+    <!-- Modal de Detalhes da Vacina -->
+    <div class="modal fade" id="detalhesModal" tabindex="-1" aria-labelledby="detalhesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detalhesModalLabel">Detalhes da Vacina</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="vaccineDetailsBody">
+                        <!-- Detalhes da vacina serão carregados aqui -->
+                    </div>
+                    <div class="mt-4" id="nextDoseDates">
+                        <h6>Próximas Doses:</h6>
+                        <div class="d-flex flex-wrap" id="nextDoseCards"></div>
                     </div>
                 </div>
-            `;
-            
-            if (vacina.status === 'Pendente') {
-                pendentesContainer.appendChild(card);
-            } else {
-                feitasContainer.appendChild(card);
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="confirmarVacinaBtn"
+                        onclick="confirmarVacina()">Marcar como Concluído</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Header fixo no topo com título e exibição do CPF -->
+    <header class="header d-flex justify-content-between align-items-center px-3 text-white">
+        <a href="main.html" class="header-title text-white">
+            <h1>TEKICINA</h1>
+        </a>
+        <div id="userInfo" class="text-white">
+            <!-- O CPF e o nome do usuário serão exibidos aqui -->
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <div class="container py-5">
+        <h1 class="text-center mb-4" id="title">TABELA DE VACINAS</h1>
+        <!-- Filtros de Status -->
+        <div class="container py-2">
+            <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('todas')">Todas</button>
+            <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('Pendente')">Pendentes</button>
+            <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('Concluído')">Concluídas</button>
+        </div>
+
+        <table class="table table-striped vaccine-table">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-syringe"></i> Nome</th>
+                    <th><i class="bi bi-calendar-event"></i> Data Recomendada</th>
+                    <th><i class="bi bi-box-seam"></i> Estoque</th>
+                    <th><i class="bi bi-vial"></i> Doses</th>
+                    <th><i class="bi bi-clipboard-check"></i> Status</th>
+                    <th><i class="bi bi-check-circle"></i> Ação</th>
+                </tr>
+            </thead>
+            <tbody id="vaccineList"></tbody>
+        </table>
+    </div>
+
+
+
+    <script>
+        let vacinasData = [];
+        let selectedVacinaIndex = null;
+
+        // Carrega o arquivo JSON e exibe na tabela
+        async function loadVaccines() {
+            try {
+                const response = await fetch('../vacinas.json');
+                if (!response.ok) throw new Error('Erro ao carregar o arquivo vacinas.json');
+
+                vacinasData = await response.json();
+                renderVaccines(vacinasData);
+            } catch (error) {
+                console.error("Erro ao carregar os dados das vacinas:", error);
+                alert("Erro ao carregar os dados das vacinas.");
             }
+        }
+
+        // Renderiza a tabela de vacinas com botão "Detalhar"
+        function renderVaccines(vacinas) {
+            const listContainer = document.getElementById('vaccineList');
+            listContainer.innerHTML = '';
+
+            if (!vacinas || vacinas.length === 0) {
+                listContainer.innerHTML = '<tr><td colspan="6" class="text-center">Nenhuma vacina disponível.</td></tr>';
+                return;
+            }
+
+            vacinas.forEach((vacina, index) => {
+                const statusIcon = vacina.status === "Concluído" ? '<i class="bi bi-check-circle text-success"></i>' : '<i class="bi bi-x-circle text-danger"></i>';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${vacina.vacina_nome}</td>
+                    <td>${vacina.data_de_vencimento || 'N/A'}</td>
+                    <td>${vacina.estoque || 'N/A'}</td>
+                    <td>${vacina.dose || 'N/A'}</td>
+                    <td>${statusIcon}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick="detalharVacina(${index})">
+                            <i class="bi bi-info-circle"></i> Detalhar
+                        </button>
+                    </td>
+                `;
+                listContainer.appendChild(row);
+            });
+        }
+
+        // Renderiza a tabela de vacinas com botão "Detalhar"
+        function renderVaccines(vacinas) {
+            const listContainer = document.getElementById('vaccineList');
+            listContainer.innerHTML = '';
+
+            if (!vacinas || vacinas.length === 0) {
+                listContainer.innerHTML = '<tr><td colspan="6" class="text-center">Nenhuma vacina disponível.</td></tr>';
+                return;
+            }
+
+            vacinas.forEach((vacina, index) => {
+                const statusIcon = vacina.status === "Concluído" ? '<i class="bi bi-check-circle text-success"></i>' : '<i class="bi bi-x-circle text-danger"></i>';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${vacina.vacina_nome}</td>
+                    <td>${vacina.data_de_vencimento || 'N/A'}</td>
+                    <td>${vacina.estoque || 'N/A'}</td>
+                    <td>${vacina.dose || 'N/A'}</td>
+                    <td>${statusIcon}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick="detalharVacina(${index})">
+                            <i class="bi bi-info-circle"></i> Detalhar
+                        </button>
+                    </td>
+                `;
+                listContainer.appendChild(row);
+            });
+        }
+
+        // Função para abrir o modal de detalhes da vacina
+        function detalharVacina(index) {
+            selectedVacinaIndex = index;
+            const vacina = vacinasData[index];
+            const modalContent = `
+                <p><strong>Vacina:</strong> ${vacina.vacina_nome}</p>
+                <p><strong>Idade:</strong> ${vacina.idade}</p>
+                <p><strong>Doenças Evitadas:</strong> ${vacina.doencas_evitas}</p>
+                <p><strong>Dose:</strong> ${vacina.dose}</p>
+                <p><strong>Intervalo:</strong> ${vacina.intervalo}</p>
+                <p><strong>Estoque:</strong> ${vacina.estoque || 'N/A'} unidades</p>
+                <p><strong>Data de Validade:</strong> ${vacina.data_de_vencimento || 'N/A'}</p>
+                <p><strong>Detalhes:</strong> ${vacina.detalhes}</p>
+            `;
+            document.getElementById('vaccineDetailsBody').innerHTML = modalContent;
+
+            // Exibir datas das próximas doses em cards
+            const nextDoseDates = calcularProximasDoses(vacina);
+            const nextDoseCardsContainer = document.getElementById('nextDoseCards');
+            nextDoseCardsContainer.innerHTML = '';
+            nextDoseDates.forEach(date => {
+                const card = document.createElement('div');
+                card.className = 'card m-2';
+                card.style.width = '6rem';
+                card.innerHTML = `<div class="card-body text-center">${date}</div>`;
+                nextDoseCardsContainer.appendChild(card);
+            });
+
+            const detalhesModal = new bootstrap.Modal(document.getElementById('detalhesModal'));
+            detalhesModal.show();
+        }
+
+        // Função para confirmar a vacina e atualizar o status
+        function confirmarVacina() {
+            if (selectedVacinaIndex !== null) {
+                vacinasData[selectedVacinaIndex].status = "Concluído";
+                renderVaccines(vacinasData);
+                const detalhesModal = bootstrap.Modal.getInstance(document.getElementById('detalhesModal'));
+                detalhesModal.hide();
+            }
+        }
+
+        // Calcula as próximas datas de vacinação se houver mais de uma dose
+        function calcularProximasDoses(vacina) {
+            const intervalInDays = vacina.intervalo ? parseInt(vacina.intervalo.match(/\d+/)) : 0;
+            const dates = [];
+            let currentDate = new Date(vacina.data_de_vencimento);
+
+            for (let i = 1; i < vacina.dose; i++) {
+                currentDate.setDate(currentDate.getDate() + intervalInDays);
+                dates.push(currentDate.toLocaleDateString());
+            }
+            return dates;
+        }
+        // Função para buscar cliente por CPF
+        async function buscarClientePorCPF(cpf) {
+            try {
+                const response = await fetch('../clientes.json');
+                if (!response.ok) throw new Error('Erro ao carregar o arquivo clientes.json');
+
+                const data = await response.json();
+                const cliente = data.clientes.find(cliente => cliente.cpf === cpf) || null;
+
+                if (!cliente) {
+                    console.log("Cliente não encontrado com o CPF:", cpf);
+                }
+
+                return cliente;
+            } catch (error) {
+                console.error("Erro ao carregar os dados dos clientes:", error);
+                return null;
+            }
+        }
+
+        // Exibir modal de CPF ao carregar a página e buscar cliente
+        document.addEventListener("DOMContentLoaded", () => {
+            const cpfModal = new bootstrap.Modal(document.getElementById('cpfModal'));
+            cpfModal.show();
+
+            const cpfForm = document.getElementById("cpfForm");
+            cpfForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const cpf = document.getElementById("cpfInput").value;
+                cpfModal.hide();
+
+                const cliente = await buscarClientePorCPF(cpf);
+                const userInfo = document.getElementById("userInfo");
+
+                if (cliente) {
+                    userInfo.innerHTML = `<strong>Usuário:</strong> ${cliente.nome} <br> <strong>CPF:</strong> ${cliente.cpf}`;
+                } else {
+                    userInfo.innerHTML = `<strong>Usuário não encontrado</strong>`;
+                }
+            });
         });
-    }
 
-    // Função para alterar o status da vacina
-    function alterarStatus(vacinaId) {
-        fetch(`/api/alterarStatus/${vacinaId}`, {
-            method: 'POST'
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            document.getElementById('cpfForm').dispatchEvent(new Event('submit')); // Atualiza a lista
-        });
-    }
+        // Calcula as próximas datas de vacinação se houver mais de uma dose
+        function calcularProximasDoses(vacina) {
+            const intervalInDays = vacina.intervalo ? parseInt(vacina.intervalo.match(/\d+/)) : 0;
+            const dates = [];
+            let currentDate = new Date(vacina.data_de_vencimento);
 
-    // Funções para filtrar vacinas pendentes e feitas
-    function showPendentes() {
-        document.getElementById('vacinasPendentes').classList.remove('d-none');
-        document.getElementById('vacinasFeitas').classList.add('d-none');
-    }
+            for (let i = 1; i < vacina.dose; i++) {
+                currentDate.setDate(currentDate.getDate() + intervalInDays);
+                dates.push(currentDate.toLocaleDateString());
+            }
+            return dates;
+        }
 
-    function showFeitas() {
-        document.getElementById('vacinasPendentes').classList.add('d-none');
-        document.getElementById('vacinasFeitas').classList.remove('d-none');
-    }
-</script>
+        function filtrarVacinas(status) {
+            let vacinasFiltradas = vacinasData;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.filter-btn[onclick="filtrarVacinas('${status}')"]`).classList.add('active');
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            if (status !== 'todas') {
+                vacinasFiltradas = vacinasData.filter(vacina => vacina.status === status);
+            }
+            renderVaccines(vacinasFiltradas);
+        }
+
+        // Carrega os dados das vacinas ao iniciar a página
+        document.addEventListener("DOMContentLoaded", loadVaccines);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
