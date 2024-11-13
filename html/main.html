@@ -71,44 +71,122 @@
         </div>
     </header>
 
-    <!-- Conteúdo principal -->
-    <div class="container py-5">
-        <h1 class="text-center mb-4" id="title">TABELA DE VACINAS</h1>
-        <!-- Filtros de Status -->
-        <div class="container py-2">
-            <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('todas')">Todas</button>
-            <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('Pendente')">Pendentes</button>
-            <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('Concluído')">Concluídas</button>
-        </div>
+    <!-- <!-- Conteúdo principal -->
+<div class="container py-5">
+    <h1 class="text-center mb-4" id="title">TABELA DE VACINAS</h1>
+    <div class="container py-2">
+        <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('todas')">Todas</button>
+        <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('Pendente')">Não Aplicadas</button>
+        <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('Concluído')">Concluídas</button>
+        <button class="btn btn-outline-primary filter-btn" onclick="filtrarVacinas('Não Aplicada')">Pendentes</button>
+    </div>
 
-        <table class="table table-striped vaccine-table">
-            <thead>
-                <tr>
-                    <th><i class="bi bi-syringe"></i> Nome</th>
-                    <th><i class="bi bi-calendar-event"></i> Data Recomendada</th>
-                    <th><i class="bi bi-box-seam"></i> Estoque</th>
-                    <th><i class="bi bi-vial"></i> Doses</th>
-                    <th><i class="bi bi-clipboard-check"></i> Status</th>
-                    <th><i class="bi bi-check-circle"></i> Ação</th>
-                </tr>
-            </thead>
-            <tbody id="vaccineList"></tbody>
-        </table>
+    <!-- Legenda dos ícones de status -->
+    <div class="container status-legend">
+        <div class="status-legend-item">
+            <i class="bi bi-check-circle text-success"></i> Concluído
+        </div>
+        <div class="status-legend-item">
+            <i class="bi bi-x-circle text-danger"></i> Não Aplicada
+        </div>
+        <div class="status-legend-item">
+            <i class="bi bi-clock text-warning"></i> Pendente
+        </div>
+    </div>
+
+    <table class="table table-striped vaccine-table">
+        <thead>
+            <tr>
+                <th><i class="bi bi-syringe"></i> Nome</th>
+                <th><i class="bi bi-calendar-event"></i> Data Recomendada</th>
+                <th><i class="bi bi-box-seam"></i> Estoque</th>
+                <th><i class="bi bi-vial"></i> Doses</th>
+                <th><i class="bi bi-clipboard-check"></i> Status</th>
+                <th><i class="bi bi-check-circle"></i> Ação</th>
+            </tr>
+        </thead>
+        <tbody id="vaccineList"></tbody>
+    </table>
+</div>
+    <!-- Modal de Vacinas Atrasadas -->
+    <div class="modal fade" id="vencidasModal" tabindex="-1" aria-labelledby="vencidasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title" id="vencidasModalLabel">
+                        <i class="bi bi-exclamation-triangle-fill text-danger"></i> Vacinas Atrasadas
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>CPF:</strong> <span id="cpfInfo"></span></p>
+                    <p><strong>Usuário:</strong> <span id="nomeUsuarioInfo"></span></p>
+                    <p>Está com as seguintes vacinas atrasadas para aplicação:</p>
+                    <ul id="vencidasList" class="list-group"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
+
     <script>
+
+        // Simulação de vacinas com data recomendada atrasada
+        const vacinasAtrasadasSimulacao = [
+            { vacina_nome: "Hepatite B", data_recomendada: "2024-10-15" },
+            { vacina_nome: "Penta", data_recomendada: "2024-11-01" },
+            { vacina_nome: "Tríplice Viral", data_recomendada: "2024-11-10" }
+        ];
+
+        // Função para verificar e exibir vacinas atrasadas
+        function verificarVacinasAtrasadas(cpf, nomeUsuario) {
+            const vencidasList = document.getElementById('vencidasList');
+            const cpfInfo = document.getElementById('cpfInfo');
+            const nomeUsuarioInfo = document.getElementById('nomeUsuarioInfo');
+
+            // Atualiza o CPF e o nome do usuário no modal
+            cpfInfo.textContent = cpf;
+            nomeUsuarioInfo.textContent = nomeUsuario;
+
+            // Limpa a lista de vacinas atrasadas e insere novas
+            vencidasList.innerHTML = '';
+            vacinasAtrasadasSimulacao.forEach(vacina => {
+                const item = document.createElement('li');
+                item.className = 'list-group-item';
+                item.innerHTML = `<strong>${vacina.vacina_nome}</strong> - Data Recomendada: ${vacina.data_recomendada}`;
+                vencidasList.appendChild(item);
+            });
+
+            // Exibe o modal de vacinas atrasadas
+            const vencidasModal = new bootstrap.Modal(document.getElementById('vencidasModal'));
+            vencidasModal.show();
+        }
         let vacinasData = [];
         let selectedVacinaIndex = null;
 
-        // Carrega o arquivo JSON e exibe na tabela
         async function loadVaccines() {
             try {
                 const response = await fetch('../vacinas.json');
                 if (!response.ok) throw new Error('Erro ao carregar o arquivo vacinas.json');
-
                 vacinasData = await response.json();
+
+                // Adicionar status "Concluído", "Pendente" ou "Não Aplicada"
+                vacinasData = vacinasData.map(vacina => {
+                    if (["BCG", "Covid-19", "Influenza Quadrivalente"].includes(vacina.vacina_nome)) {
+                        vacina.status = "Concluído";
+                    } else if (["Penta (Difteria, Tétano, Pertussis, Hepatite B, Haemophilus influenzae B)", "Hepatite B (recombinante)", "Tríplice viral (Sarampo, Caxumba, Rubéola)"].includes(vacina.vacina_nome)) {
+                        vacina.status = "Não Aplicada";
+                    } else {
+                        vacina.status = "Pendente";
+                    }
+                    return vacina;
+                });
+
                 renderVaccines(vacinasData);
             } catch (error) {
                 console.error("Erro ao carregar os dados das vacinas:", error);
@@ -116,7 +194,6 @@
             }
         }
 
-        // Renderiza a tabela de vacinas com botão "Detalhar"
         function renderVaccines(vacinas) {
             const listContainer = document.getElementById('vaccineList');
             listContainer.innerHTML = '';
@@ -127,40 +204,13 @@
             }
 
             vacinas.forEach((vacina, index) => {
-                const statusIcon = vacina.status === "Concluído" ? '<i class="bi bi-check-circle text-success"></i>' : '<i class="bi bi-x-circle text-danger"></i>';
+                const statusIcon = vacina.status === "Concluído" ? '<i class="bi bi-check-circle text-success"></i>' :
+                    vacina.status === "Pendente" ? '<i class="bi bi-x-circle text-danger"></i>' :
+                        '<i class="bi bi-clock text-warning"></i>';
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${vacina.vacina_nome}</td>
-                    <td>${vacina.data_de_vencimento || 'N/A'}</td>
-                    <td>${vacina.estoque || 'N/A'}</td>
-                    <td>${vacina.dose || 'N/A'}</td>
-                    <td>${statusIcon}</td>
-                    <td>
-                        <button class="btn btn-info btn-sm" onclick="detalharVacina(${index})">
-                            <i class="bi bi-info-circle"></i> Detalhar
-                        </button>
-                    </td>
-                `;
-                listContainer.appendChild(row);
-            });
-        }
-
-        // Renderiza a tabela de vacinas com botão "Detalhar"
-        function renderVaccines(vacinas) {
-            const listContainer = document.getElementById('vaccineList');
-            listContainer.innerHTML = '';
-
-            if (!vacinas || vacinas.length === 0) {
-                listContainer.innerHTML = '<tr><td colspan="6" class="text-center">Nenhuma vacina disponível.</td></tr>';
-                return;
-            }
-
-            vacinas.forEach((vacina, index) => {
-                const statusIcon = vacina.status === "Concluído" ? '<i class="bi bi-check-circle text-success"></i>' : '<i class="bi bi-x-circle text-danger"></i>';
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${vacina.vacina_nome}</td>
-                    <td>${vacina.data_de_vencimento || 'N/A'}</td>
+                    <td>${vacina.data_recomendada || 'N/A'}</td>
                     <td>${vacina.estoque || 'N/A'}</td>
                     <td>${vacina.dose || 'N/A'}</td>
                     <td>${statusIcon}</td>
@@ -248,7 +298,7 @@
             }
         }
 
-        // Exibir modal de CPF ao carregar a página e buscar cliente
+        // Exibir modal de CPF ao carregar a página e verificar vacinas atrasadas
         document.addEventListener("DOMContentLoaded", () => {
             const cpfModal = new bootstrap.Modal(document.getElementById('cpfModal'));
             cpfModal.show();
@@ -264,6 +314,7 @@
 
                 if (cliente) {
                     userInfo.innerHTML = `<strong>Usuário:</strong> ${cliente.nome} <br> <strong>CPF:</strong> ${cliente.cpf}`;
+                    verificarVacinasAtrasadas(cliente.cpf, cliente.nome);
                 } else {
                     userInfo.innerHTML = `<strong>Usuário não encontrado</strong>`;
                 }

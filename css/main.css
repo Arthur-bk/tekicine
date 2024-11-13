@@ -155,13 +155,47 @@ body {
     font-size: 0.85rem;
 }
 
+/* CSS para a seção de legenda dos status */
+.container .status-legend {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 20px;
+}
+
+.status-legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.status-legend-item i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.status-legend-item .text-success {
+    color: #28a745;
+}
+
+.status-legend-item .text-danger {
+    color: #dc3545;
+}
+
+.status-legend-item .text-warning {
+    color: #ffc107;
+}
+
+
 /* Responsividade */
 @media (max-width: 768px) {
     .header-title h1 {
         font-size: 1.5rem;
     }
 
-    .table th, .table td {
+    .table th,
+    .table td {
         font-size: 0.85rem;
     }
 

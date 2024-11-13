@@ -6,6 +6,7 @@
     "dose": "Única",
     "intervalo": "Nenhum",
     "estoque": "50",
+    "data_recomendada": "2024-01-01",
     "data_de_vencimento": "2025-01-01",
     "detalhes": "A vacina BCG é aplicada em recém-nascidos para proteger contra formas graves de tuberculose, especialmente meningite tuberculosa e tuberculose miliar."
   },
@@ -16,6 +17,7 @@
     "dose": "Primeira",
     "intervalo": "Nenhum",
     "estoque": "45",
+    "data_recomendada": "2024-01-01",
     "data_de_vencimento": "2025-02-15",
     "detalhes": "Protege contra o vírus da hepatite B, que pode causar doenças crônicas do fígado e até câncer hepático."
   },
@@ -26,6 +28,7 @@
     "dose": "Primeira",
     "intervalo": "Nenhum",
     "estoque": "30",
+    "data_recomendada": "2024-03-01",
     "data_de_vencimento": "2025-03-01",
     "detalhes": "Oferece proteção contra cinco doenças perigosas, incluindo difteria, tétano, coqueluche, hepatite B e infecções causadas por Haemophilus influenzae tipo B."
   },
@@ -36,6 +39,7 @@
     "dose": "Primeira",
     "intervalo": "Nenhum",
     "estoque": "100",
+    "data_recomendada": "2024-06-10",
     "data_de_vencimento": "2025-08-10",
     "detalhes": "Induz imunidade contra o vírus SARS-CoV-2, protegendo especialmente contra formas graves e complicações da doença."
   },
@@ -46,6 +50,7 @@
     "dose": "Única",
     "intervalo": "Nenhum",
     "estoque": "60",
+    "data_recomendada": "2024-09-01",
     "data_de_vencimento": "2025-12-01",
     "detalhes": "Protege contra o vírus da febre amarela, uma doença infecciosa que pode causar febre hemorrágica e insuficiência hepática."
   },
@@ -56,6 +61,7 @@
     "dose": "Primeira",
     "intervalo": "Nenhum",
     "estoque": "80",
+    "data_recomendada": "2024-12-15",
     "data_de_vencimento": "2025-07-15",
     "detalhes": "Oferece imunidade contra sarampo, caxumba e rubéola, prevenindo complicações sérias como pneumonia, encefalite e surdez."
   },
@@ -66,6 +72,7 @@
     "dose": "Primeira",
     "intervalo": "6 meses entre doses",
     "estoque": "40",
+    "data_recomendada": "2024-06-01",
     "data_de_vencimento": "2025-09-30",
     "detalhes": "Indicada para proteção contra o HPV, ajudando a prevenir câncer do colo do útero e verrugas genitais em adolescentes e adultos."
   },
@@ -76,6 +83,7 @@
     "dose": "Primeira",
     "intervalo": "2 meses entre doses",
     "estoque": "25",
+    "data_recomendada": "2024-03-20",
     "data_de_vencimento": "2026-03-20",
     "detalhes": "Previne a meningite B, uma forma grave de infecção que pode causar complicações sérias, incluindo morte e danos neurológicos."
   },
@@ -86,6 +94,7 @@
     "dose": "Primeira",
     "intervalo": "2 a 6 meses entre doses",
     "estoque": "15",
+    "data_recomendada": "2024-06-01",
     "data_de_vencimento": "2026-01-01",
     "detalhes": "Oferece proteção contra herpes zoster, prevenindo surtos de cobreiro e suas dolorosas complicações, como a neuralgia pós-herpética."
   },
@@ -96,6 +105,7 @@
     "dose": "Anual",
     "intervalo": "Nenhum",
     "estoque": "70",
+    "data_recomendada": "2024-11-01",
     "data_de_vencimento": "2024-12-15",
     "detalhes": "Oferece proteção contra as quatro cepas mais comuns do vírus influenza, reduzindo o risco de gripe e suas complicações."
   },
@@ -106,6 +116,7 @@
     "dose": "Primeira",
     "intervalo": "6 semanas entre doses",
     "estoque": "35",
+    "data_recomendada": "2024-11-20",
     "data_de_vencimento": "2025-11-20",
     "detalhes": "Previne a varicela, uma infecção viral que causa febre e erupções cutâneas, comum em crianças e que pode ter complicações em adultos."
   },
@@ -116,6 +127,7 @@
     "dose": "Primeira",
     "intervalo": "Nenhum",
     "estoque": "40",
+    "data_recomendada": "2025-01-01",
     "data_de_vencimento": "2025-06-01",
     "detalhes": "A vacina contra a hepatite A previne infecções causadas pelo vírus da hepatite A, que pode levar a doenças hepáticas."
   },
@@ -126,6 +138,7 @@
     "dose": "Única",
     "intervalo": "Nenhum",
     "estoque": "20",
+    "data_recomendada": "2025-04-01",
     "data_de_vencimento": "2025-09-15",
     "detalhes": "Protege contra quatro sorogrupos da meningite meningocócica, uma infecção grave que afeta o cérebro e a medula espinhal."
   },
@@ -136,6 +149,7 @@
     "dose": "Única",
     "intervalo": "Nenhum",
     "estoque": "50",
+    "data_recomendada": "2025-02-20",
     "data_de_vencimento": "2025-10-20",
     "detalhes": "Combina proteção contra sarampo, caxumba, rubéola e varicela, doenças virais que podem causar complicações graves."
   },
@@ -146,6 +160,7 @@
     "dose": "Reforço",
     "intervalo": "3 anos entre doses",
     "estoque": "60",
+    "data_recomendada": "2025-01-01",
     "data_de_vencimento": "2025-11-30",
     "detalhes": "Protege contra difteria, tétano e coqueluche, sendo recomendada como dose de reforço para prolongar a imunidade."
   },
@@ -156,7 +171,63 @@
     "dose": "Primeira",
     "intervalo": "2 meses entre doses",
     "estoque": "35",
+    "data_recomendada": "2024-03-01",
     "data_de_vencimento": "2026-01-15",
     "detalhes": "Previne infecções graves, especialmente em crianças, como meningite, pneumonia e epiglotite causadas pelo Haemophilus influenzae tipo b."
+  },
+  {
+    "vacina_nome": "Rotavírus",
+    "idade": "2 meses",
+    "doencas_evitas": "Gastroenterite causada por rotavírus",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "50",
+    "data_recomendada": "2024-02-15",
+    "data_de_vencimento": "2025-08-01",
+    "detalhes": "Previne gastroenterite grave em bebês causada pelo rotavírus, reduzindo a incidência de diarreia e vômitos graves."
+  },
+  {
+    "vacina_nome": "Poliomielite",
+    "idade": "2 meses",
+    "doencas_evitas": "Poliomielite",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "45",
+    "data_recomendada": "2024-03-10",
+    "data_de_vencimento": "2025-10-01",
+    "detalhes": "Protege contra a poliomielite, uma doença que pode causar paralisia permanente."
+  },
+  {
+    "vacina_nome": "Meningocócica C",
+    "idade": "3 meses",
+    "doencas_evitas": "Meningite C",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "40",
+    "data_recomendada": "2024-04-15",
+    "data_de_vencimento": "2025-12-01",
+    "detalhes": "Previne a meningite causada pela bactéria meningococo tipo C, uma infecção grave."
+  },
+  {
+    "vacina_nome": "Pneumocócica",
+    "idade": "2 meses",
+    "doencas_evitas": "Infecções causadas pelo pneumococo",
+    "dose": "Primeira",
+    "intervalo": "Nenhum",
+    "estoque": "60",
+    "data_recomendada": "2024-03-01",
+    "data_de_vencimento": "2025-09-01",
+    "detalhes": "Protege contra doenças graves como pneumonia, meningite e septicemia causadas pelo pneumococo."
+  },
+  {
+    "vacina_nome": "Hepatite B (Reforço)",
+    "idade": "Clínica Particular",
+    "doencas_evitas": "Hepatite B",
+    "dose": "Reforço",
+    "intervalo": "Nenhum",
+    "estoque": "30",
+    "data_recomendada": "2024-12-10",
+    "data_de_vencimento": "2025-11-30",
+    "detalhes": "Reforço da vacina contra hepatite B, para garantir proteção contínua contra o vírus."
   }
 ]
